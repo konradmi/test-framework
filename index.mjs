@@ -1,11 +1,10 @@
 import JestHasteMap from 'jest-haste-map'
+import chalk from 'chalk'
 
-import { dirname, join } from 'path'
+import { dirname, join, relative } from 'path'
 import { fileURLToPath } from 'url'
 import { cpus } from 'os'
 import { Worker } from 'jest-worker'
-
-import { runTest } from './worker.js'
 
 // Get the root path to our project (Like `__dirname` but __dirname can't be used since it's an .mjs file).
 const root = dirname(fileURLToPath(import.meta.url))
@@ -16,7 +15,7 @@ const hasteMapOptions = {
     platforms: [],
     rootDir: root,
     roots: [root],
-};
+}
 
 const hasteMap = new JestHasteMap.default(hasteMapOptions);
 await hasteMap.setupCachePath(hasteMapOptions)
@@ -31,8 +30,14 @@ const worker = new Worker(join(root, 'worker.js'), {
 
 await Promise.all(
   Array.from(testFiles).map(async (testFile) => {
-    const testResult = await worker.runTest(testFile)
-    console.log(testResult)
+    const { success, errorMessage } = await worker.runTest(testFile)
+
+      const status = success
+        ? chalk.green.inverse(' PASS ')
+        : chalk.red.inverse( ' FAIL ')
+      console.log(`${status} ${chalk.dim(relative(root, testFile)) }`)
+
+    if (!success) console.log(`  ${errorMessage}`)
   }),
 )
 
