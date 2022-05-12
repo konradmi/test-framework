@@ -1,6 +1,6 @@
 describe('describe test', () => {
   it('works', () => {
-    expect(1).toBe(2)
+    expect(1).toBe(1)
   })
 })
 

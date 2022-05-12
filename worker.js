@@ -38,7 +38,7 @@ exports.runTest = async function (testFile) {
     }
     testResult.success = true
   } catch(e) {
-    testResult.errorMessage = e.message
+    testResult.errorMessage = `${testName} : ${e.message}`
   }
 
   return testResult
