@@ -6,6 +6,7 @@
   "dependencies": {
     "chalk": "^5.0.1",
     "expect": "^28.1.0",
+    "jest-environment-node": "^28.1.0",
     "jest-haste-map": "^28.1.0",
     "jest-mock": "^28.1.0",
     "jest-worker": "^28.1.0"
