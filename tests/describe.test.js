@@ -1,3 +1,11 @@
+const banana = require('./banana.js')
+
+describe('banana', () => {
+  it('banana', () => {
+    expect(banana).toBe('good')
+  })
+})
+
 describe('describe test', () => {
   it('works', () => {
     expect(1).toBe(1)
